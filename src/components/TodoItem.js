@@ -9,13 +9,19 @@ export default class TodoItem extends Component {
     }
 
     toggleTodo = () => {
+        this.props.updateTodo(this.props.item.id, !this.props.item.completed)
         this.setState({ completed: !this.state.completed })
     }
 
     render() {
+        const item = this.props.item
         return (
-            <TouchableOpacity onPress={this.toggleTodo}>
-                <Text style={[styles.item, {backgroundColor: (this.state.completed ? 'grey' : 'transparent')}]}>{this.props.title}</Text> 
+            <TouchableOpacity
+            style={styles.itemButton}
+             onPress={this.toggleTodo}>
+                <Text style={[styles.item, {opacity: (this.state.completed ? 0.5 : 1)},
+                {textDecorationLine: (item.completed ? 'line-through': 'none')}
+                ]}>{item.task}</Text> 
             </TouchableOpacity>
         )
     }
@@ -24,5 +30,9 @@ export default class TodoItem extends Component {
 const styles = StyleSheet.create({
     item: {
         padding: 10
+    },
+    itemButton: {
+        borderBottomWidth: 1,
+        borderColor: '#ccc'
     }
   });
